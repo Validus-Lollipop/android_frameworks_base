@@ -4197,6 +4197,13 @@ public final class Settings {
 
         /**
          * Whether to display the ADB notification.
+         * The TCP/IP port to run ADB on, or -1 for USB
+         * @hide
+         */
+        public static final String ADB_PORT = "adb_port";
+
+        /**
+         * The hostname for this device
          * @hide
          */
         public static final String ADB_NOTIFY = "adb_notify";
