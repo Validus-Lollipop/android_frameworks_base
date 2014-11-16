@@ -108,6 +108,8 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     private static final String GLOBAL_ACTION_KEY_SETTINGS = "settings";
     private static final String GLOBAL_ACTION_KEY_LOCKDOWN = "lockdown";
     private static final String GLOBAL_ACTION_KEY_PROFILE = "profile";
+    private static final String GLOBAL_ACTION_KEY_REBOOTRECOVERY = "rebootrecovery";
+    private static final String GLOBAL_ACTION_KEY_REBOOTBOOTLOADER = "rebootbootloader";
 
     private final Context mContext;
     private final WindowManagerFuncs mWindowManagerFuncs;
@@ -283,6 +285,10 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                 mItems.add(new PowerAction());
             } else if (GLOBAL_ACTION_KEY_REBOOT.equals(actionKey)) {
                 mItems.add(new RebootAction());
+            } else if (GLOBAL_ACTION_KEY_REBOOTRECOVERY.equals(actionKey)) {
+                mItems.add(new RebootRecoveryAction());
+            } else if (GLOBAL_ACTION_KEY_REBOOTBOOTLOADER.equals(actionKey)) {
+                mItems.add(new RebootBootloaderAction());
             } else if (GLOBAL_ACTION_KEY_AIRPLANE.equals(actionKey)) {
                 mItems.add(mAirplaneModeOn);
             } else if (GLOBAL_ACTION_KEY_BUGREPORT.equals(actionKey)) {
@@ -500,6 +506,65 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                 IPowerManager pm = IPowerManager.Stub.asInterface(ServiceManager
                         .getService(Context.POWER_SERVICE));
                 pm.reboot(true, null, false);
+            } catch (RemoteException e) {
+                Log.e(TAG, "PowerManager service died!", e);
+                return;
+            }
+        }
+    }
+
+
+    private final class RebootRecoveryAction extends SinglePressAction {
+        private RebootRecoveryAction() {
+            super(com.android.internal.R.drawable.ic_lock_power_rebootrecovery,
+                    R.string.global_action_rebootrecovery);
+        }
+
+        @Override
+        public boolean showDuringKeyguard() {
+            return true;
+        }
+
+        @Override
+        public boolean showBeforeProvisioning() {
+            return true;
+        }
+
+        @Override
+        public void onPress() {
+            try {
+                IPowerManager powermanager = IPowerManager.Stub.asInterface(ServiceManager
+                        .getService(Context.POWER_SERVICE));
+                powermanager.reboot(true, "recovery", false);
+            } catch (RemoteException e) {
+                Log.e(TAG, "PowerManager service died!", e);
+                return;
+            }
+        }
+    }
+
+    private final class RebootBootloaderAction extends SinglePressAction {
+        private RebootBootloaderAction() {
+            super(com.android.internal.R.drawable.ic_lock_power_rebootbootloader,
+                    R.string.global_action_rebootbootloader);
+        }
+
+        @Override
+        public boolean showDuringKeyguard() {
+            return true;
+        }
+
+        @Override
+        public boolean showBeforeProvisioning() {
+            return true;
+        }
+
+        @Override
+        public void onPress() {
+            try {
+                IPowerManager powermanager = IPowerManager.Stub.asInterface(ServiceManager
+                        .getService(Context.POWER_SERVICE));
+                powermanager.reboot(true, "bootloader", false);
             } catch (RemoteException e) {
                 Log.e(TAG, "PowerManager service died!", e);
                 return;
