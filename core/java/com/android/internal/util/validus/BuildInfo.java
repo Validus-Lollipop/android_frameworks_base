@@ -20,7 +20,7 @@ import android.os.SystemProperties;
 public class BuildInfo {
 
     private static final String BUILD_TYPE_PROP = "ro.validus.buildtype";
-    private static final String SLIM_VERSION_PROP = "ro.validus.version";
+    private static final String VALIDUS_VERSION_PROP = "ro.validus.version";
 
     public static String getValidusBuildType() {
         return SystemProperties.get(BUILD_TYPE_PROP, "");
