@@ -154,6 +154,14 @@ public class BatteryMeterView extends View implements DemoMode,
 
     BatteryTracker mTracker = new BatteryTracker();
 
+    private ContentObserver mObserver = new ContentObserver(new Handler()) {
+        public void onChange(boolean selfChange, Uri uri) {
+            mShowPercent = ENABLE_PERCENT && 0 != Settings.System.getInt(
+                getContext().getContentResolver(), Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT, 0);
+            postInvalidate();
+        }
+    };
+
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
