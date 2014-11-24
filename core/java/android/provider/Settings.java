@@ -3032,6 +3032,12 @@ public final class Settings {
         public static final String STATUS_BAR_SHOW_BATTERY_PERCENT = "status_bar_show_battery_percent";
 
        /**
+   	    * Height of navigation bar buttons
+        * @hide
+        */
+        public static final String NAVIGATION_BAR_HEIGHT = "navigation_bar_height";
+
+        /**	   
          * Network traffic indicator, goes from least to greatest significant bitwise
          * 0 = Display up-stream traffic if set
          * 1 = Display down-stream traffic if set
