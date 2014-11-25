@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.internal.util.validus
+package com.android.internal.util.validus;
 
 import android.content.Context;
 import android.content.res.Resources;
