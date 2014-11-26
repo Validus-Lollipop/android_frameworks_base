@@ -168,7 +168,8 @@ public class Clock extends TextView implements DemoMode {
             mSettingsObserver = new SettingsObserver(new Handler());
         }
         mSettingsObserver.observe();
-        updateSettings();    
+        updateSettings();
+	}		
 
     @Override
     protected void onDetachedFromWindow() {
