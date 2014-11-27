@@ -293,6 +293,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     // left-hand icons
     LinearLayout mStatusIcons;
+	LinearLayout mCenterClockLayout;
     LinearLayout mStatusIconsKeyguard;
 
     // the icons themselves
