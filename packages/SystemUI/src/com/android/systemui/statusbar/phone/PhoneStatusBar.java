@@ -2248,10 +2248,13 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         if ((diff & StatusBarManager.DISABLE_SYSTEM_INFO) != 0) {
             mSystemIconArea.animate().cancel();
+			mCenterClockLayout.animate().cancel();
             if ((state & StatusBarManager.DISABLE_SYSTEM_INFO) != 0) {
                 animateStatusBarHide(mSystemIconArea, animate);
+				animateStatusBarHide(mCenterClockLayout, animate);
             } else {
                 animateStatusBarShow(mSystemIconArea, animate);
+				animateStatusBarShow(mCenterClockLayout, animate);
             }
         }
 
