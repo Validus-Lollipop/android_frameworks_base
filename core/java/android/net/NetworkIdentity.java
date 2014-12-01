@@ -24,7 +24,6 @@ import android.content.Context;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 
 import java.util.Objects;
@@ -151,11 +150,11 @@ public class NetworkIdentity {
         if (isNetworkTypeMobile(type)) {
             final TelephonyManager telephony = (TelephonyManager) context.getSystemService(
                     Context.TELEPHONY_SERVICE);
-            roaming = telephony.isNetworkRoaming(SubscriptionManager.getDefaultDataSubId());
+            roaming = telephony.isNetworkRoaming();
             if (state.subscriberId != null) {
                 subscriberId = state.subscriberId;
             } else {
-                subscriberId = telephony.getSubscriberId(SubscriptionManager.getDefaultDataSubId());
+                subscriberId = telephony.getSubscriberId();
             }
 
         } else if (type == TYPE_WIFI) {

@@ -120,7 +120,6 @@ import android.os.RemoteException;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
-import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.format.Formatter;
 import android.text.format.Time;
@@ -749,10 +748,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             case MATCH_MOBILE_ALL:
                 // mobile templates are relevant when SIM is ready and
                 // subscriberId matches.
-                if (isDdsSimStateReady()) {
-                    return Objects.equals(tele.getSubscriberId(
-                            SubscriptionManager.getDefaultDataSubId()),
-                            template.getSubscriberId());
+                if (tele.getSimState() == SIM_STATE_READY) {
+                    return Objects.equals(tele.getSubscriberId(), template.getSubscriberId());
                 } else {
                     return false;
                 }
@@ -1016,8 +1013,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             case MATCH_MOBILE_ALL:
                 // TODO: offer more granular control over radio states once
                 // 4965893 is available.
-                if (isDdsSimStateReady() && Objects.equals(tele.getSubscriberId(
-                    SubscriptionManager.getDefaultDataSubId()), template.getSubscriberId())) {
+                if (tele.getSimState() == SIM_STATE_READY
+                        && Objects.equals(tele.getSubscriberId(), template.getSubscriberId())) {
                     setPolicyDataEnable(TYPE_MOBILE, enabled);
                     setPolicyDataEnable(TYPE_WIMAX, enabled);
                 }
@@ -1208,9 +1205,9 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         final TelephonyManager tele = TelephonyManager.from(mContext);
 
         // avoid creating policy when SIM isn't ready
-        if (!isDdsSimStateReady()) return;
+        if (tele.getSimState() != SIM_STATE_READY) return;
 
-        final String subscriberId = tele.getSubscriberId(SubscriptionManager.getDefaultDataSubId());
+        final String subscriberId = tele.getSubscriberId();
         final NetworkIdentity probeIdent = new NetworkIdentity(
                 TYPE_MOBILE, TelephonyManager.NETWORK_TYPE_UNKNOWN, subscriberId, null, false);
 
@@ -2261,12 +2258,5 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             if (i < size - 1) fout.print(",");
         }
         fout.print("]");
-    }
-
-    // Return true if SIM state of DDS subscription is in READY state
-    private boolean isDdsSimStateReady() {
-        final TelephonyManager tm = TelephonyManager.from(mContext);
-        int slotId = SubscriptionManager.getSlotId(SubscriptionManager.getDefaultDataSubId());
-        return tm.getSimState(slotId) == TelephonyManager.SIM_STATE_READY;
     }
 }

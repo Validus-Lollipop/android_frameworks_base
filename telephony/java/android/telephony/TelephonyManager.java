@@ -1258,7 +1258,7 @@ public class TelephonyManager {
      * @hide
      */
     public int getDataNetworkType() {
-        return getDataNetworkType(SubscriptionManager.getDefaultDataSubId());
+        return getDataNetworkType(getDefaultSubscription());
     }
 
     /**
@@ -1431,9 +1431,7 @@ public class TelephonyManager {
             case NETWORK_TYPE_GSM:
                 return "GSM";
             case NETWORK_TYPE_TD_SCDMA:
-                return "TD-SCDMA";
-            case NETWORK_TYPE_IWLAN:
-                return "IWLAN";
+                return "TD_SCDMA";
             default:
                 return "UNKNOWN";
         }
@@ -1541,7 +1539,7 @@ public class TelephonyManager {
         else if ("PUK_REQUIRED".equals(prop)) {
             return SIM_STATE_PUK_REQUIRED;
         }
-        else if ("PERSO_LOCKED".equals(prop)) {
+        else if ("NETWORK_LOCKED".equals(prop)) {
             return SIM_STATE_NETWORK_LOCKED;
         }
         else if ("READY".equals(prop)) {
@@ -2412,13 +2410,8 @@ public class TelephonyManager {
      * <p>Requires Permission: {@link android.Manifest.permission#ACCESS_COARSE_LOCATION}
      */
     public List<CellInfo> getAllCellInfo() {
-        return getAllCellInfo(getDefaultSubscription());
-    }
-
-    /** {@hide} */
-    public List<CellInfo> getAllCellInfo(long subId) {
         try {
-            return getITelephony().getAllCellInfoUsingSubId(subId);
+            return getITelephony().getAllCellInfo();
         } catch (RemoteException ex) {
             return null;
         } catch (NullPointerException ex) {
@@ -2888,7 +2881,12 @@ public class TelephonyManager {
 
     /** @hide */
     public int getSimCount() {
-        return getPhoneCount();
+        if(isMultiSimEnabled()) {
+        //TODO Need to get it from Telephony Devcontroller
+            return 2;
+        } else {
+           return 1;
+        }
     }
 
     /**
@@ -3453,12 +3451,6 @@ public class TelephonyManager {
     /** @hide */
     @SystemApi
     public void setDataEnabled(boolean enable) {
-        setDataEnabledUsingSubId(getDefaultSubscription(), enable);
-    }
-
-    /** @hide */
-    @SystemApi
-    public void setDataEnabledUsingSubId(long subId, boolean enable) {
         try {
             AppOpsManager appOps = (AppOpsManager)mContext.getSystemService(Context.APP_OPS_SERVICE);
             if (enable) {
@@ -3467,7 +3459,7 @@ public class TelephonyManager {
                     return;
                 }
             }
-            getITelephony().setDataEnabledUsingSubId(subId, enable);
+            getITelephony().setDataEnabled(enable);
         } catch (RemoteException e) {
             Log.e(TAG, "Error calling setDataEnabled", e);
         }

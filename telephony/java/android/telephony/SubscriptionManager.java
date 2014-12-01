@@ -119,24 +119,6 @@ public class SubscriptionManager implements BaseColumns {
     public static final int SIM_NOT_INSERTED = -1;
 
     /**
-     * The Network mode of SIM/sub.
-     * <P>Type: INTEGER (int)</P>
-     */
-    public static final String NETWORK_MODE = "network_mode";
-
-    public static final int DEFAULT_NW_MODE = -1;
-
-    /**
-     * The activation state of SIM/sub.
-     * <P>Type: INTEGER (int)</P>
-     */
-    public static final String SUB_STATE = "sub_state";
-
-    public static final int INACTIVE = 0;
-    public static final int ACTIVE = 1;
-    public static final int SUB_CONFIGURATION_IN_PROGRESS = 2;
-
-    /**
      * TelephonyProvider column name for user displayed name.
      * <P>Type: TEXT (String)</P>
      */
@@ -810,30 +792,6 @@ public class SubscriptionManager implements BaseColumns {
         return getPhoneId(getDefaultVoiceSubId());
     }
 
-    public static boolean isSMSPromptEnabled() {
-        try {
-            ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
-            if (iSub != null) {
-                return iSub.isSMSPromptEnabled();
-            }
-        } catch (RemoteException ex) {
-         // ignore it
-        }
-        return false;
-    }
-
-    public static void setSMSPromptEnabled(boolean enabled) {
-        try {
-            ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
-            if (iSub != null) {
-                iSub.setSMSPromptEnabled(enabled);
-            }
-        } catch (RemoteException ex) {
-         // ignore it
-        }
-    }
-
-    /** @hide */
     /**
      * @return subId of the DefaultSms subscription or the value INVALID_SUB_ID if an error.
      * @hide - to be unhidden
@@ -990,49 +948,6 @@ public class SubscriptionManager implements BaseColumns {
     }
 
     /** @hide */
-    public static void activateSubId(long subId) {
-        logd("activateSubId sub id = " + subId);
-        try {
-            getISubInfo().activateSubId(subId);
-        } catch (RemoteException ex) {
-            return;
-        }
-    }
-
-    public static void deactivateSubId(long subId) {
-        logd("deactivateSubId sub id = " + subId);
-        try {
-            getISubInfo().deactivateSubId(subId);
-        } catch (RemoteException ex) {
-            return;
-        }
-    }
-
-    public static int getSubState(long subId) {
-        logd("getSubState sub id = " + subId);
-        try {
-            return getISubInfo().getSubState(subId);
-        } catch (RemoteException ex) {
-            return INACTIVE;
-        }
-    }
-
-    public static int setSubState(long subId, int subState) {
-        logd("setSubState sub id = " + subId + " state = " + subState);
-        try {
-            return getISubInfo().setSubState(subId, subState);
-        } catch (RemoteException ex) {
-            return INACTIVE;
-        }
-    }
-
-   /**
-    @hide
-    */
-    private static ISub getISubInfo() {
-        return ISub.Stub.asInterface(ServiceManager.getService("isub"));
-    }
-
     public static void putPhoneIdAndSubIdExtra(Intent intent, int phoneId) {
         long[] subIds = SubscriptionManager.getSubId(phoneId);
         if (subIds != null && subIds.length > 0) {
@@ -1076,41 +991,6 @@ public class SubscriptionManager implements BaseColumns {
         return subId;
 
     }
-
-    public static boolean isVoicePromptEnabled() {
-        try {
-            ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
-            if (iSub != null) {
-                return iSub.isVoicePromptEnabled();
-            }
-        } catch (RemoteException ex) {
-         // ignore it
-        }
-        return false;
-    }
-
-    public static void setVoicePromptEnabled(boolean enabled) {
-        try {
-            ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
-            if (iSub != null) {
-                iSub.setVoicePromptEnabled(enabled);
-            }
-        } catch (RemoteException ex) {
-         // ignore it
-        }
-    }
-
-    public static long getOnDemandDataSubId() {
-        try {
-            ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
-            if (iSub != null) {
-                return iSub.getOnDemandDataSubId();
-            } else {
-                return INVALID_SUB_ID;
-            }
-        } catch (RemoteException ex) {
-            return INVALID_SUB_ID;
-        }
-    }
 }
+
 

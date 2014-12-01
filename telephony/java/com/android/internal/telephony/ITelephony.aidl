@@ -490,9 +490,6 @@ interface ITelephony {
      */
     List<CellInfo> getAllCellInfo();
 
-
-    List<CellInfo> getAllCellInfoUsingSubId(long subId);
-
     /**
      * Sets minimum time in milli-seconds between onCellInfoChanged
      */
@@ -741,13 +738,6 @@ interface ITelephony {
      * @param enable true to turn on, else false
      */
     void setDataEnabled(boolean enable);
-
-    /**
-     * User enable/disable Mobile Data per subscription.
-     *
-     * @param enable true to turn on, else false
-     */
-    void setDataEnabledUsingSubId(long subId, boolean enable);
 
     /**
      * Get the user enabled state of Mobile Data.

@@ -133,8 +133,7 @@ interface ISub {
     int getPhoneId(long subId);
 
     /**
-     * Get the default data subscription
-     * @return Id of the data subscription
+     * Get the default data subscri     * @return Id of the data subscription
      */
     long getDefaultDataSubId();
 
@@ -151,22 +150,5 @@ interface ISub {
     void clearDefaultsForInactiveSubIds();
 
     long[] getActiveSubIdList();
-
-    boolean isSMSPromptEnabled();
-
-    void setSMSPromptEnabled(boolean enabled);
-
-    boolean isVoicePromptEnabled();
-
-    void setVoicePromptEnabled(boolean enabled);
-
-    void activateSubId(long subId);
-
-    void deactivateSubId(long subId);
-
-    int setSubState(long subId, int subStatus);
-
-    int getSubState(long subId);
-
-    long getOnDemandDataSubId();
 }
+
