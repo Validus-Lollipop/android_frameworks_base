@@ -66,4 +66,14 @@
   <!-- Doze feature -->
   <java-symbol type="bool" name="config_doze_enabled_by_default" />
   
+  <!-- Themes and styles -->
+  <java-symbol type="style" name="Theme.Material.Dialog.DarkKat" />
+  <java-symbol type="style" name="Theme.Material.Dialog.Alert.DarkKat" />
+  <java-symbol type="style" name="TextAppearance.Material.Large.DarkKat" />
+  <java-symbol type="style" name="TextAppearance.Material.Small.DarkKat" />
+  <java-symbol type="drawable" name="item_background_borderless_material_dk" />
+  <java-symbol type="drawable" name="btn_borderless_material_dk" />
+  <java-symbol type="drawable" name="darkkat_bg_blue_grey" />
+  <java-symbol type="color" name="darkkat_blue_grey" />
+  
 </resources>

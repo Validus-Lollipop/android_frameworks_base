@@ -3272,6 +3272,12 @@ public final class Settings {
         public static final String NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD = "network_traffic_autohide_threshold";
 
         /**
+         * Status bar battery % text
+         * @hide
+         */
+        public static final String STATUS_BAR_SHOW_BATTERY_TEXT = "status_bar_show_battery_text";
+
+        /**
          *  Enable statusbar double tap gesture on to put device to sleep
          * @hide
          */
@@ -3329,7 +3335,16 @@ public final class Settings {
         public static final String ANIMATION_CONTROLS_EXIT_ONLY = "animation_controls_exit_only";
         public static final String ANIMATION_CONTROLS_REVERSE_EXIT = "animation_controls_reverse_exit";		
 		
-        /**		
+        /**	
+         * MediaScanner behavior on boot.
+         * 0 = enabled
+         * 1 = ask (notification)
+         * 2 = disabled
+         * @hide
+         */
+         public static final String MEDIA_SCANNER_ON_BOOT = "media_scanner_on_boot";
+
+        /**	
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -4197,6 +4212,13 @@ public final class Settings {
 
         /**
          * Whether to display the ADB notification.
+         * The TCP/IP port to run ADB on, or -1 for USB
+         * @hide
+         */
+        public static final String ADB_PORT = "adb_port";
+
+        /**
+         * The hostname for this device
          * @hide
          */
         public static final String ADB_NOTIFY = "adb_notify";
