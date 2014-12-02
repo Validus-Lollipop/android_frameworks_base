@@ -2589,7 +2589,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             // Set the preferred network mode to target desired value or Default
             // value defined in RILConstants
             int type;
-            int phoneCount = TelephonyManager.getDefault().getPhoneCount();
             type = SystemProperties.getInt("ro.telephony.default_network",
                         RILConstants.PREFERRED_NETWORK_MODE);
             loadSetting(stmt, Settings.Global.PREFERRED_NETWORK_MODE, type);
