@@ -408,9 +408,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     WindowState mFocusedWindow;
     IApplicationToken mFocusedApp;
 
-    // Volume wake control flag
-    boolean mVolumeWakeScreen;
-
     PointerLocationView mPointerLocationView;
 
     // The current size of the screen; really; extends into the overscan area of
