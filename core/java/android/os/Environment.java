@@ -757,12 +757,6 @@ public class Environment {
         return isExternalStorageRemovable(externalDir);
     }
 
-    /** {@hide} */
-    public static boolean isNoEmulatedStorageExist() {
-        final StorageVolume volume = getNoEmulatedVolume();
-        return (volume != null);
-    }
-
     /**
      * Returns whether the storage device that provides the given path is
      * removable.
